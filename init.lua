@@ -84,6 +84,11 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -389,11 +394,6 @@ require('lazy').setup({
               preview_height = 0.8,
             },
           },
-          clipmenu = {
-            layout_config = {
-              height = 0.6,
-            },
-          },
         },
       }
 
@@ -401,7 +401,6 @@ require('lazy').setup({
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
       pcall(require('telescope').load_extension, 'undo')
-      pcall(require('telescope').load_extension, 'clipmenu')
 
       -- See `:help telescope.builtin`
       local builtin = require 'telescope.builtin'
