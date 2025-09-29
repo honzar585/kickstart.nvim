@@ -666,6 +666,8 @@ require('lazy').setup({
         -- ts_ls = {},
         --
 
+        hls = {},
+
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -1013,6 +1015,17 @@ vim.api.nvim_create_autocmd('BufWritePost', {
     end
   end,
 })
+
+local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
+parser_config.latte = {
+  filetype = 'latte',
+}
+
+vim.filetype.add {
+  extension = {
+    latte = 'latte',
+  },
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
