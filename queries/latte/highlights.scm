@@ -1,116 +1,49 @@
+; Document structure
+(document) @scope
+
 ; Comments
-(latte_comment) @comment.block
+(comment) @comment
+(latte_comment) @comment
 
-; Tag delimiters
-["{" "}"] @punctuation.bracket
+; Doctype
+(doctype) @constant
 
-; Control flow keywords
-(tag_open name: [
-  "if"
-  "elseif"
-  "else"
-  "foreach"
-  "for"
-  "while"
-  "ifset"
-  "ifcontent"
-] @keyword.conditional)
+; Tags
+(tag_name) @tag
+(start_tag (tag_name) @tag)
+(end_tag (tag_name) @tag)
+(self_closing_tag (tag_name) @tag)
 
-(tag_close name: [
-  "if"
-  "foreach"
-  "for"
-  "while"
-  "ifset"
-  "ifcontent"
-] @keyword.conditional)
+; Script and style elements
+(script_element
+  (start_tag (tag_name) @tag)
+)
 
-; Block/template keywords
-(tag_open name: [
-  "block"
-  "define"
-  "snippet"
-  "capture"
-] @keyword.function)
+(style_element
+  (start_tag (tag_name) @tag)
+)
 
-(tag_close name: [
-  "block"
-  "define"
-  "snippet"
-  "capture"
-] @keyword.function)
+; Attributes
+(attribute_name) @attribute
+(attribute_value) @string
+(quoted_attribute_value (attribute_value) @string)
 
-; Cache keyword
-(tag_open name: "cache" @keyword.storage)
-(tag_close name: "cache" @keyword.storage)
+; Latte-specific attributes
+(latte_attribute_name) @attribute.latte
+(latte_attribute_value) @string
+(quoted_latte_attribute_value (latte_attribute_value) @string)
 
-; Form keywords
-(tag_open name: [
-  "form"
-  "label"
-] @keyword)
+; Entities
+(entity) @character.special
 
-(tag_close name: [
-  "form"
-  "label"
-] @keyword)
-
-; Include/import keywords
-(tag_single name: [
-  "include"
-  "import"
-  "extends"
-  "layout"
-  "embed"
-] @keyword.import)
-
-; Variable/assignment keywords
-(tag_single name: [
-  "var"
-  "default"
-] @keyword.storage)
-
-; Debugging keywords
-(tag_single name: [
-  "dump"
-  "debugbreak"
-] @keyword.debug)
-
-; Special syntax keywords
-(tag_single name: [
-  "l"
-  "r"
-  "syntax"
-  "spaceless"
-] @keyword)
-
-; Control keywords
-(tag_single name: [
-  "breakIf"
-  "continueIf"
-  "rollback"
-  "commit"
-  "do"
-] @keyword.control)
-
-; Loop special keywords
-(tag_single name: [
-  "first"
-  "last"
-  "sep"
-  "iterateWhile"
-  "case"
-] @keyword)
-
-; Meta keywords
-(tag_single name: [
-  "contentType"
-  "status"
-  "php"
-] @keyword)
-
-; Expression content
-(tag_expression) @variable
-
-; Content (HTML/text outside Latte tags)
+; Text content
 (text) @none
+
+; Raw text elements (script, style)
+(raw_text) @text
+
+; Latte tags and comments
+(latte_tag) @variable.builtin 
+; Error handling - fix erroneous_end_tag structure
+(erroneous_end_tag) @error
+(erroneous_end_tag_name) @error
